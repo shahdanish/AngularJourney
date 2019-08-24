@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewBag.Title = "Angular Services";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    angular.module("finance2", [])
+        .factory("currencyConverter", function () {
+            var currencies = ["USD", "EUR", "CNY"];
+            var usdToForeignRates = {
+                USD: 1,
+                EUR: 0.74,
+                CNY: 6.09
+            };
+            var convert = function convert(amount, inCurr, outCurr) {
+                return amount * usdToForeignRates[outCurr] / usdToForeignRates[inCurr];
+            };
+
+            return {
+                currencies: currencies,
+                convert: convert
+            };
+        });
+    //The code snippet angular.module('invoice2', ['finance2']) specifies that the invoice2 module depends on the finance2 module
+    angular.module("invoice2", ["finance2"])
+        .controller("InvoiceController", ["currencyConverter", function InvoiceController(currencyConverter) {
+            debugger;
+            this.myValue = true; // to show hide the dom element
+            this.qty = 1;
+            this.cost = 2;
+            this.inCurr = 'EUR';
+            this.currencies = currencyConverter.currencies;
+            this.total = function total(outCurr) {
+                return currencyConverter.convert(this.qty * this.cost, this.inCurr, outCurr);
+            };
+            this.pay = function pay() {
+                //this.myValue = true;
+                window.alert("Thanks !!!!!!!");
+            }
+        }]);
+</script>
+
+<div class="container">
+    <div class="panel panel-default" style="margin-top: 12px;">
+        <div class="panel-heading panel-heading-blue">Conceptual Overview</div>
+        <div class="panel-body">
+            <div ng-app="invoice2" ng-controller="InvoiceController as invoice">
+                <div class="col-lg-6 col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading panel-heading-blue">Adding UI logic: Controllers</div>
+                        <div class="panel-body">
+                            <div class="">
+                                <form class="warpper">
+                                    <div class="form-group">
+                                        <label>Quantity:</label>
+                                        <input type="number" class="form-control" ng-model="invoice.qty" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Cost:</label>
+                                        {{invoice.inCurr}}
+                                        <input type="number" class="form-control" ng-model="invoice.cost" />
+                                    </div>
+                                    <div class="form-group">
+                                        <select ng-model="invoice.inCurr" class="form-control">
+                                            <option ng-repeat="c in invoice.currencies">{{c}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" ng-show="invoice.myValue">
+                                        <label>Total:</label>
+                                        <span ng-repeat="c in invoice.currencies">
+                                            {{invoice.total(c) | currency:c}}
+                                        </span>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-success" ng-click="invoice.pay()">Pay</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

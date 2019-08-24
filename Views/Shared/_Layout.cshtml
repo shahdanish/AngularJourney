@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
     <title>Angular Journey</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -12,17 +13,19 @@
             background-color: #50769c;
             color: white;
         }
+
         .navbar-inverse {
             background-color: #50769c;
             border-color: #4975a0;
         }
+
             .navbar-inverse .navbar-nav > li > a {
                 color: #f1f1f1;
             }
+
             .navbar-inverse .navbar-brand {
                 color: #f5f5f5;
             }
-
     </style>
 </head>
 <body>
@@ -39,8 +42,8 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Conceptual Overview", "Index", "Home")</li>
-                    @*<li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
+                    <li>@Html.ActionLink("Angular Services", "AngularServices", "Home")</li>
+                    @*<li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
                 </ul>
             </div>
         </div>
