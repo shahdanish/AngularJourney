@@ -17,6 +17,10 @@ namespace DanishAng.Controllers
         {
             return View();
         }
+        public ActionResult AngularServicesCallAPI()
+        {
+            return View();
+        }
 
         public ActionResult About()
         {
